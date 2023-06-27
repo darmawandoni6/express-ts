@@ -11,7 +11,28 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 - yarn install or npm install
 - yarn dev or npm run dev
 
-## tree
+## Table of Contents
+
+<!-- TABLE-OF-CONTENTS:START -->
+- [Features](https://github.com/darmawandoni6/express-ts#features)
+- [Project Structure](https://github.com/darmawandoni6/express-ts#project-structure)
+- [API Endpoints](https://github.com/darmawandoni6/express-ts#api-endpoint)
+<!-- TABLE-OF-CONTENTS:END -->
+
+
+
+## [Features](#features)
+
+<!-- FEATURES:START -->
+- **SQL database**: used sqlite3
+- **Authentication and authorization**: using [JWT](https://jwt.io/)
+- **Logging**: using [morgan](https://github.com/expressjs/morgan)
+- **Error handling**: error handling mechanism with specific result messages and codes
+- **Environment variables**: using [dotenv](https://github.com/motdotla/dotenv)
+- **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
+<!-- FEATURES:END -->
+
+## [Project Structure](#project-structure)
 
 ```js
 src
@@ -36,3 +57,14 @@ src
  ┃ ┗ server.ts
  ┗ main.ts
 ```
+
+## [API Endpoints](#api-endpoint)
+
+List of available routes:  
+  
+**Auth Routes**:
+- Register - POST /api-v1/register
+- Login - POST /api-v1/login
+
+**Role Routes**:
+- Edit User - PUT /api-v1/role
