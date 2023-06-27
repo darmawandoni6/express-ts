@@ -1,0 +1,16 @@
+{
+  "semi": true,
+  "trailingComma": "all",
+  "printWidth": 120,
+  "importOrder": [
+    "^(express/(.*)$)|^(express$)",
+    "<THIRD_PARTY_MODULES>",
+    "^@routes(.*)$",
+    "^@models(.*)$",
+    "^@utils(.*)$",
+    "^@(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
