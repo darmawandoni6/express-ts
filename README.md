@@ -60,6 +60,10 @@ src
 
 ## [API Endpoints](#api-endpoint)
 
+import collection API to like postman, thunder client, etc.
+
+[Collection API](https://github.com/darmawandoni6/express-ts/blob/master/express-ts.json)
+
 List of available routes:  
   
 **Auth Routes**:
