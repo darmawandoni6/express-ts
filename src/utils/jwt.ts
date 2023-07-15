@@ -13,21 +13,21 @@ export default {
     return token;
   },
   verifyAccessToken: (req: Request, res: Response, next: NextFunction) => {
-    if (!req.cookies) {
+    const { token } = req.cookies;
+
+    if (!token) {
       next(createHttpError.Unauthorized());
       return;
     }
 
-    const { token } = req.cookies;
-
-    jwt.verify(token, process.env.ACCESS_TOKEN as string, async (err: any, payload: any) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN as string, (err: any, payload: any) => {
       if (err) {
         const message = err.name === "JsonWebTokenError" ? "Unauthorized" : err.message;
         next(createHttpError.Unauthorized(message));
         return;
       }
 
-      res.locals.payload = payload;
+      res.locals = payload;
       next();
     });
   },

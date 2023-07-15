@@ -1,8 +1,11 @@
+import env from "dotenv";
 import { Sequelize } from "sequelize";
+
+env.config();
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: `./src/database/storage/${process.env.ENV}.sqlite3`,
+  storage: `./src/databases/sqlite/${process.env.ENV}.sqlite3`,
 });
 
 export default sequelize;

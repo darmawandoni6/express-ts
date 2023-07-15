@@ -4,9 +4,10 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
-    "dev": "ENV=development nodemon -r tsconfig-paths/register src/main.ts",
+    "sync": "ts-node -r tsconfig-paths/register src/databases/sync.ts",
+    "dev": "nodemon -r tsconfig-paths/register src/main.ts",
     "start": "node dist/main.js",
-    "build": "rm -rf dist && tsc && tsc-alias"
+    "build": "rm -rf dist && tsc  && tsc-alias"
   },
   "author": "darmawandoni6@gmail.com",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "http-errors": "^2.0.0",
+    "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
     "sequelize": "^6.32.1",
