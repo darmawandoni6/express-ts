@@ -9,6 +9,7 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 - git clone https://github.com/darmawandoni6/express-ts
 - cd express-ts
 - yarn install or npm install
+- yarn sync or npm run sync (for sync database)
 - yarn dev or npm run dev
 
 ## Table of Contents
@@ -25,7 +26,7 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 <!-- FEATURES:START -->
 
 - **SQL database**: used sqlite3
-- **ORM** : used [sequelize](https://sequelize.org/docs/v6/getting-started/) 
+- **ORM** : used [sequelize](https://sequelize.org/docs/v6/getting-started/)
 - **Authentication and authorization**: using [JWT](https://jwt.io/)
 - **Logging**: using [morgan](https://github.com/expressjs/morgan)
 - **Error handling**: error handling mechanism with specific result messages and codes
