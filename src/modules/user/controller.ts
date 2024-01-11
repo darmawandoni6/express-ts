@@ -1,44 +1,30 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 import createHttpError from "http-errors";
 import Joi from "joi";
 
 import bcrypt from "@utils/bcrypt";
+import { validationBody } from "@utils/joi";
 import jwt from "@utils/jwt";
+import type { ResponseBody } from "@utils/type";
 
-import { RequestBody, ResponseBody, UserAttributes } from "./interface";
+import type { IController, UserAttributes } from "./interface";
 import services from "./services";
 
-class Controller {
+class Controller implements IController {
   async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const schema = Joi.object<RequestBody>({
+      const schema = Joi.object<UserAttributes>({
         username: Joi.string().required(),
         password: Joi.string().required(),
         roleId: Joi.number().required(),
       });
 
-      const { value } = await services.validation(req, schema);
+      const body = await validationBody<UserAttributes>(req, schema);
 
-      const user = await services.findOne({ username: value?.username });
+      body.password = bcrypt.encrypt(body.password);
 
-      if (user.error) {
-        throw createHttpError.BadRequest(user.error);
-      }
-      if (user.data) {
-        throw createHttpError.Conflict();
-      }
-
-      if (!value) {
-        throw createHttpError.BadRequest();
-      }
-      const payload: RequestBody = {
-        password: bcrypt.encrypt(value.password),
-        roleId: value.roleId,
-        username: value.username,
-      };
-
-      await services.create(payload);
+      await services.create(body);
 
       const result: ResponseBody = {
         message: "success register",
@@ -52,42 +38,38 @@ class Controller {
   }
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const schema = Joi.object<RequestBody>({
+      const schema = Joi.object<UserAttributes>({
         username: Joi.string().required(),
         password: Joi.string().required(),
       });
-      const { value } = await services.validation(req, schema);
-      if (!value) throw createHttpError.BadRequest();
+      const body = await validationBody<UserAttributes>(req, schema);
 
-      const user = await services.findOne({ username: value.username });
-      if (!user.data) {
-        throw createHttpError.NotFound("user not found");
+      const user = await services.findOne({ username: body.username });
+      if (!user) {
+        throw createHttpError.NotFound(`${body.username} not found`);
       }
-      if (user.error) {
-        throw createHttpError.BadRequest(user.error);
-      }
-      const payload: UserAttributes = user.data as UserAttributes;
 
-      const match = bcrypt.compare(value.password, payload.password);
+      const match = bcrypt.compare(body.password, user.password);
       if (!match) {
-        throw createHttpError.NotFound("user not found");
+        throw createHttpError.NotFound(`${body.username} not found`);
       }
 
-      payload.password = "";
-      const token = jwt.signToken(payload);
+      user.password = "";
+      const token = jwt.signToken(user);
 
       const expired = new Date(); // Now
       expired.setDate(expired.getDate() + parseInt(process.env.EXP_TOKEN as string, 10)); // Set now + 30 days as the new date
 
       res.cookie("token", token, { httpOnly: true, expires: expired });
 
-      const result: ResponseBody = {
+      const login = {
+        token,
+        expired,
+      };
+      const result: ResponseBody<typeof login> = {
         message: "success login",
         status: 200,
-        data: {
-          token,
-          expired,
-        },
+        data: login,
       };
 
       res.send(result);
@@ -99,15 +81,15 @@ class Controller {
     try {
       const { id } = res.locals;
 
-      const user = await services.findOneProfile({ id });
-      if (user.error) {
-        throw createHttpError.BadRequest(user.error);
+      const user = await services.findOne({ id });
+      if (!user) {
+        throw createHttpError.NotFound();
       }
-
-      const result: ResponseBody = {
+      user.password = "";
+      const result: ResponseBody<UserAttributes> = {
         message: "success get by token",
         status: 200,
-        data: user.data,
+        data: user,
       };
 
       res.send(result);
@@ -119,36 +101,18 @@ class Controller {
     try {
       const { id } = res.locals;
 
-      const user = await services.findOneProfile({ id });
-      if (user.error) {
-        throw createHttpError.BadRequest(user.error);
-      }
-      if (!user.data) {
-        res.clearCookie("token");
-        throw createHttpError.Unauthorized();
-      }
-
-      const schema = Joi.object<RequestBody>({
+      const schema = Joi.object<UserAttributes>({
         username: Joi.string().required(),
         password: Joi.string(),
         roleId: Joi.number(),
       });
 
-      const { value } = await services.validation(req, schema);
-      if (!value) {
-        throw createHttpError.BadRequest();
-      }
+      const body = await validationBody<UserAttributes>(req, schema);
 
-      const userGet: UserAttributes = user.data as UserAttributes;
-
-      const payload: RequestBody = {
-        ...value,
-        password: value.password ? bcrypt.encrypt(value.password) : userGet.password,
-      };
-      await services.edit({ id, payload });
+      await services.update(id, body);
 
       const result: ResponseBody = {
-        message: "success get by token",
+        message: "success edit",
         status: 200,
         data: null,
       };
@@ -162,10 +126,7 @@ class Controller {
     try {
       const { id } = res.locals;
 
-      const user = await services.remove(id);
-      if (user.error) {
-        throw createHttpError.BadRequest(user.error);
-      }
+      await services.remove(id);
 
       res.clearCookie("token");
 

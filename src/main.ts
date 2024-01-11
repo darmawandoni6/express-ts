@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { type Application } from "express";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -15,6 +15,7 @@ class App {
   app: Application;
   port: number;
   message: string;
+
   constructor() {
     env.config();
 

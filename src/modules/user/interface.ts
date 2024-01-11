@@ -1,42 +1,16 @@
+import type { NextFunction, Request, Response } from "express";
+
 export interface UserAttributes {
   id: number;
+  roleId: number;
   username: string;
   password: string;
 }
 
-export interface IError {
-  error?: string;
+export interface IController {
+  register(req: Request, res: Response, next: NextFunction): Promise<void>;
+  login(req: Request, res: Response, next: NextFunction): Promise<void>;
+  getByToken(req: Request, res: Response, next: NextFunction): Promise<void>;
+  edit(req: Request, res: Response, next: NextFunction): Promise<void>;
+  remove(req: Request, res: Response, next: NextFunction): Promise<void>;
 }
-
-export interface RequestBody {
-  username: string;
-  password: string;
-  roleId?: number;
-}
-export interface ResValidation extends IError {
-  value?: RequestBody;
-}
-
-export interface ILogin {
-  token: string;
-  expired: Date;
-}
-
-export interface IResult extends IError {
-  data?: ILogin | UserAttributes | null;
-}
-
-export interface ResponseBody extends IResult {
-  message: string;
-  status: number;
-}
-
-export type IWhere = {
-  id?: number;
-  username?: string;
-};
-
-export type TEdit = {
-  id: number;
-  payload: RequestBody;
-};

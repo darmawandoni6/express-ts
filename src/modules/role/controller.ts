@@ -1,32 +1,29 @@
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 import createHttpError from "http-errors";
+import Joi from "joi";
 
-import { ResponseBody } from "./interface";
+import { validationBody } from "@utils/joi";
+import type { ResponseBody } from "@utils/type";
+
+import type { IController, RoleAtributes } from "./interface";
 import services from "./services";
-import { validationBody } from "./validation";
 
-class Controller {
+class Controller implements IController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { error, value } = validationBody(req);
-      if (error) {
-        throw createHttpError.BadRequest(error);
+      const schema = Joi.object<RoleAtributes>({
+        name: Joi.string().required(),
+      });
+
+      const body = await validationBody<RoleAtributes>(req, schema);
+
+      const role = await services.findOne(body.name);
+      if (role) {
+        throw createHttpError.Conflict(`${role.name} sudah ada`);
       }
 
-      if (!value) {
-        throw createHttpError.BadRequest();
-      }
-
-      const role = await services.findOne({ name: value.name });
-      if (role.error) {
-        throw createHttpError.BadRequest(role.error);
-      }
-      if (role.data) {
-        throw createHttpError.Conflict();
-      }
-
-      await services.create(value);
+      await services.create(body);
 
       const data: ResponseBody = {
         message: "success create",
@@ -40,10 +37,18 @@ class Controller {
   }
   async edit(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const role = await services.edit(req);
-      if (role.error) {
-        throw createHttpError.BadRequest(role.error);
+      const id = parseInt(req.params.id, 10);
+
+      const schema = Joi.object<RoleAtributes>({
+        name: Joi.string().required(),
+      });
+      const body = await validationBody<RoleAtributes>(req, schema);
+
+      const role = await services.findOne(body.name);
+      if (role) {
+        throw createHttpError.Conflict(`${role.name} sudah ada`);
       }
+      await services.update(id, body);
 
       const data: ResponseBody = {
         message: "success update",
@@ -57,10 +62,8 @@ class Controller {
   }
   async remove(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const role = await services.remove(req);
-      if (role.error) {
-        throw createHttpError.BadRequest(role.error);
-      }
+      const id = parseInt(req.params.id, 10);
+      await services.remove(id);
 
       const data: ResponseBody = {
         message: "success remove",
@@ -75,14 +78,11 @@ class Controller {
   async findAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const role = await services.findAll();
-      if (role.error) {
-        throw createHttpError.BadRequest(role.error);
-      }
 
-      const data: ResponseBody = {
+      const data: ResponseBody<RoleAtributes[]> = {
         message: "success findAll",
         status: 200,
-        data: role.data,
+        data: role,
       };
       res.send(data);
     } catch (error) {

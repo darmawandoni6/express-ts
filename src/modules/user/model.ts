@@ -7,7 +7,6 @@ import { UserAttributes } from "./interface";
 
 type UserCreationAttributes = Optional<UserAttributes, "id">;
 interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {
-  roleId?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -21,8 +20,13 @@ const UserModel = sequelize.define<UserInstance>(
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
+    roleId: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
     username: {
       allowNull: false,
+      unique: true,
       type: DataTypes.STRING,
     },
     password: {
@@ -33,7 +37,7 @@ const UserModel = sequelize.define<UserInstance>(
   { freezeTableName: true },
 );
 
-RoleModel.hasOne(UserModel);
+RoleModel.hasOne(UserModel, { foreignKey: "roleId" });
 UserModel.belongsTo(RoleModel);
 
 export default UserModel;

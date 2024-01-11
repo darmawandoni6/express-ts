@@ -1,13 +1,8 @@
-import { Router } from "express";
+import BaseRouter from "@utils/baseRouter";
 
 import controller from "./controller";
 
-class Routes {
-  router: Router = Router();
-
-  constructor() {
-    this.routes();
-  }
+class Routes extends BaseRouter {
   routes(): void {
     this.router.route("/role").post(controller.create).get(controller.findAll);
     this.router.route("/role/:id").put(controller.edit).delete(controller.remove);

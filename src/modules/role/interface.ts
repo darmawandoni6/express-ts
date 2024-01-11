@@ -1,31 +1,14 @@
+import type { NextFunction, Request, Response } from "express";
+
 export interface RoleAtributes {
   id: number;
   name: string;
   status: boolean;
 }
 
-export interface RequestBody {
-  name: string;
-  status: boolean;
+export interface IController {
+  create(req: Request, res: Response, next: NextFunction): Promise<void>;
+  edit(req: Request, res: Response, next: NextFunction): Promise<void>;
+  remove(req: Request, res: Response, next: NextFunction): Promise<void>;
+  findAll(req: Request, res: Response, next: NextFunction): Promise<void>;
 }
-export interface ResValidation extends IError {
-  value?: RequestBody;
-}
-
-export interface ResponseBody extends IResult {
-  message: string;
-  status: number;
-}
-
-export interface IError {
-  error?: string;
-}
-export interface IResult extends IError {
-  data: RoleAtributes | RoleAtributes[] | null;
-}
-
-export type TWhere = {
-  id?: number;
-  name?: string;
-  status?: boolean;
-};

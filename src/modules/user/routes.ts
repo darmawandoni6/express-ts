@@ -1,15 +1,9 @@
-import { Router } from "express";
-
+import BaseRouter from "@utils/baseRouter";
 import jwt from "@utils/jwt";
 
 import controller from "./controller";
 
-class Routes {
-  router: Router = Router();
-
-  constructor() {
-    this.routes();
-  }
+class Routes extends BaseRouter {
   routes(): void {
     this.router.post("/register", controller.register);
     this.router.post("/login", controller.login);

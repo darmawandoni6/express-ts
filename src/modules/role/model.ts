@@ -24,8 +24,8 @@ const RoleModel = sequelize.define<RoleInstance>(
       type: DataTypes.STRING,
     },
     status: {
-      allowNull: false,
       type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   },
   { freezeTableName: true },

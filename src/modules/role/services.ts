@@ -1,80 +1,53 @@
-import { Request } from "express";
+import createHttpError from "http-errors";
 
-import { IError, IResult, RequestBody, TWhere } from "./interface";
+import { RoleAtributes } from "./interface";
 import RoleModel from "./model";
-import { validationBody } from "./validation";
 
 class Service {
-  async create(req: RequestBody): Promise<IError> {
+  async findOne(name: string) {
     try {
-      await RoleModel.create(req);
-      return { error: undefined };
+      const res = await RoleModel.findOne({ where: { name } });
+      return res?.toJSON();
     } catch (error) {
-      const e = error as Error;
-      return { error: e.message };
-    }
-  }
-  async edit(req: Request): Promise<IError> {
-    try {
-      const { id } = req.params;
-      const { error, value } = validationBody(req);
-      if (error) {
-        throw error;
-      }
+      const err = error as Error;
+      console.log(err.message);
 
-      if (!value) {
-        throw "Something wrong";
-      }
-
-      await RoleModel.update(value, { where: { id: parseInt(id as string, 10) } });
-      return {
-        error: undefined,
-      };
-    } catch (error) {
-      const e = error as Error;
-      return { error: e.message };
+      return Promise.reject(createHttpError.BadRequest(err.message));
     }
   }
-  async remove(req: Request): Promise<IError> {
+  async create(data: RoleAtributes) {
     try {
-      const { id } = req.params;
-      await RoleModel.destroy({ where: { id: parseInt(id as string, 10) } });
-      return {
-        error: undefined,
-      };
+      await RoleModel.create(data);
     } catch (error) {
-      const e = error as Error;
-      return { error: e.message };
+      const err = error as Error;
+      console.log(err.message);
+
+      return Promise.reject(createHttpError.BadRequest(err.message));
     }
   }
-  async findAll(): Promise<IResult> {
+  async update(id: number, data: RoleAtributes) {
+    try {
+      await RoleModel.update(data, { where: { id } });
+    } catch (error) {
+      const err = error as Error;
+      return Promise.reject(createHttpError.BadRequest(err.message));
+    }
+  }
+  async remove(id: number) {
+    try {
+      await RoleModel.update({ status: false }, { where: { id } });
+    } catch (error) {
+      const err = error as Error;
+      return Promise.reject(createHttpError.BadRequest(err.message));
+    }
+  }
+  async findAll() {
     try {
       const res = await RoleModel.findAll();
-
-      return {
-        data: res ? res.map((item) => item.toJSON()) : [],
-      };
+      return res;
     } catch (error) {
-      const e = error as Error;
-      return {
-        data: null,
-        error: e.message,
-      };
-    }
-  }
-  async findOne(where: TWhere): Promise<IResult> {
-    try {
-      const res = await RoleModel.findOne({ where });
-
-      return {
-        data: res ? res.toJSON() : null,
-      };
-    } catch (error) {
-      const e = error as Error;
-      return {
-        data: null,
-        error: e.message,
-      };
+      const err = error as Error;
+      return Promise.reject(createHttpError.BadRequest(err.message));
     }
   }
 }
