@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "express-ts",
-    "dateExported": "2023-07-15T15:04:46.074Z",
+    "dateExported": "2024-01-11T07:38:05.113Z",
     "version": "1.1",
     "folders": [
         {
@@ -36,12 +36,12 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-27T10:46:51.509Z",
-            "modified": "2023-07-15T14:37:20.795Z",
+            "modified": "2024-01-11T06:27:37.401Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"customer\",\n  \"status\": true\n}",
+                "raw": "{\n  \"name\": \"admin 2\"\n}",
                 "form": []
             },
             "tests": []
@@ -88,12 +88,12 @@
             "method": "PUT",
             "sortNum": 15000,
             "created": "2023-07-15T12:33:02.607Z",
-            "modified": "2023-07-15T12:33:25.305Z",
+            "modified": "2024-01-11T02:46:44.459Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"owner update\",\n  \"status\": true\n}",
+                "raw": "{\n  \"name\": \"owner update\"\n}",
                 "form": []
             },
             "tests": []
@@ -121,12 +121,12 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-27T10:46:51.511Z",
-            "modified": "2023-07-15T14:12:53.540Z",
+            "modified": "2024-01-11T06:28:00.177Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"username\": \"doni69\",\n  \"password\": \"kiasu123\"\n}",
+                "raw": "{\n  \"username\": \"doni691\",\n  \"password\": \"kiasu123\"\n}",
                 "form": []
             },
             "tests": []
