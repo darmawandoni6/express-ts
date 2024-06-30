@@ -1,4 +1,3 @@
-import fileStorageModel from "@database/fileStorage/fileStorage.model";
 import { sequelize } from "./sqlite";
 import userModel from "@database/user/user.model";
 import roleModel from "@database/role/role.model";
