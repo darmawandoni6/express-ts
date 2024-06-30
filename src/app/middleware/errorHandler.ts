@@ -1,4 +1,4 @@
-import { ErrorRequestHandler } from "express";
+import type { ErrorRequestHandler } from "express";
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   const code = err.status || 500;
@@ -9,5 +9,6 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     message: err.message || err,
     data: null,
   });
+
   next();
 };
