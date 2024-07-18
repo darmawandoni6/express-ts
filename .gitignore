@@ -1,4 +1,5 @@
 dist
 node_modules
 .env
-*.sqlite3
+development.sqlite3
+.vercel

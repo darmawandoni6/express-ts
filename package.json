@@ -4,9 +4,9 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
-    "sync": "ENV=development ts-node src/sync.ts",
     "dev": "ENV=development nodemon src/main.ts",
-    "start": "node dist/main.js",
+    "start": "ENV=production node dist/main.js",
+    "sync": "ENV=production ts-node src/sync.ts",
     "build": "rm -rf dist && tsc && tsc-alias",
     "lint": "./node_modules/.bin/eslint src/app/index.ts"
   },

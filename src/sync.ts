@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import Database from "./app/database";
 import ConfigDB from "./app/database/config";
 
