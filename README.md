@@ -9,7 +9,8 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 - git clone https://github.com/darmawandoni6/express-ts
 - cd express-ts
 - yarn install or npm install
-- yarn sync or npm run sync (for sync database)
+- rename .env.example to .env
+- yarn sync --seed or npm run sync --seed (for first sync database)
 - yarn dev or npm run dev
 
 ## Table of Contents
@@ -38,32 +39,18 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 
 ```js
 src
- ┣ databases
- ┃ ┣ sqlite
- ┃ ┃ ┗ development.sqlite3
- ┃ ┣ sequelize.ts
- ┃ ┗ sync.ts
- ┣ middleware
- ┃ ┗ handlingError.ts
- ┣ modules
- ┃ ┣ role
- ┃ ┃ ┣ controller.ts
- ┃ ┃ ┣ interface.ts
- ┃ ┃ ┣ model.ts
- ┃ ┃ ┣ routes.ts
- ┃ ┃ ┣ services.ts
- ┃ ┃ ┗ validation.ts
- ┃ ┗ user
- ┃ ┃ ┣ controller.ts
- ┃ ┃ ┣ interface.ts
- ┃ ┃ ┣ model.ts
- ┃ ┃ ┣ routes.ts
- ┃ ┃ ┣ services.ts
- ┃ ┃ ┗ validation.ts
- ┣ utils
- ┃ ┣ bcrypt.ts
- ┃ ┗ jwt.ts
- ┗ main.ts
+ ┣ app
+ ┃ ┣ database
+ ┃ ┣ middleware
+ ┃ ┣ modules
+ ┃ ┃ ┣ role
+ ┃ ┃ ┗ user
+ ┃ ┗ index.ts
+ ┣ helpers
+ ┣ types
+ ┣ main.ts
+ ┣ service.ts
+ ┗ sync.ts
 ```
 
 ## [API Endpoints](#api-endpoint)
@@ -74,16 +61,19 @@ import collection API to like postman, thunder client, etc.
 
 List of available routes:
 
-**User**:
+**Auth**:
 
 - Register - POST /api-v1/register
 - Login - POST /api-v1/login
-- Get By Token - GET /api-v1/user
-- Update - PUT /api-v1/user
-- Remove - DELETE /api-v1/user
+
+**User**:
+
+- Profile - GET /api-v1/user
+- Edit User - PUT /api-v1/user
+- Remove User - DELETE /api-v1/user
 
 **Role**:
 
 - Create Role - POS /api-v1/role
 - Edit Role - PUT /api-v1/role/:id
-- Remove Role - PUT /api-v1/role/:id
+- Remove Role - DELETE /api-v1/role/:id

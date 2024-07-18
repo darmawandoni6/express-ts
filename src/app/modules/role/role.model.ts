@@ -1,20 +1,20 @@
-import type { User } from "@usecase/user/user.type";
-import type { Model, Sequelize } from "sequelize";
+import type { Model, Optional, Sequelize } from "sequelize";
 import { DataTypes } from "sequelize";
 
-type Attributes = User;
+import type { Role } from "@type/role";
 
-type Instances = {
+type Attributes = Optional<Role, "id">;
+
+interface Instances extends Model<Role, Attributes>, Role {
   createdAt?: Date;
   updatedAt?: Date;
-} & Model<User> &
-  User;
+}
 
-export type { Attributes };
+export type { Attributes, Instances as InstancesRole };
 export default {
   model: (sequelize: Sequelize) => {
     return sequelize.define<Instances>(
-      "user",
+      "role",
       {
         id: {
           allowNull: false,
@@ -22,18 +22,13 @@ export default {
           primaryKey: true,
           type: DataTypes.INTEGER,
         },
-        roleId: {
-          allowNull: false,
-          type: DataTypes.INTEGER,
-        },
-        username: {
-          allowNull: false,
-          unique: true,
-          type: DataTypes.STRING,
-        },
-        password: {
+        name: {
           allowNull: false,
           type: DataTypes.STRING,
+        },
+        status: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: true,
         },
       },
       {

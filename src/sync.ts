@@ -1,28 +1,16 @@
-import "dotenv/config";
+import Database from "./app/database";
+import ConfigDB from "./app/database/config";
 
-import db from "@driver/index";
+const seed = !!process.argv[2];
 
-import { DataTypes } from "sequelize";
-
-const queryInterface = db.sequelize.getQueryInterface();
-
-const addColumn = async () => {
+const main = async () => {
+  const db = new Database(ConfigDB.SQLITE);
   try {
-    // add column
+    await db.__init();
+    await db.syncDb(seed);
   } catch (error) {
-    return Promise.reject(error);
+    console.log(error);
   }
 };
 
-db.sequelize
-  .sync()
-  .then(async () => {
-    console.log("Synced db.");
-    // await addColumn();
-    await db.role.sync();
-    await db.user.sync();
-  })
-  .catch((err) => {
-    console.log("Failed to sync db: " + err.message);
-    process.exit(-1);
-  });
+main();

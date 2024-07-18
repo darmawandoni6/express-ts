@@ -3,16 +3,16 @@ import type { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import jwt from "jsonwebtoken";
 
-export default {
-  signToken: (data: object): string => {
+class JsonWebtoken {
+  static signToken(data: object): string {
     const { ACCESS_TOKEN, EXP_TOKEN } = process.env;
 
-    const token = jwt.sign(data, ACCESS_TOKEN, {
+    const token = jwt.sign(data, ACCESS_TOKEN as string, {
       expiresIn: `${EXP_TOKEN}d`,
     });
     return token;
-  },
-  verifyAccessToken: (req: Request, res: Response, next: NextFunction) => {
+  }
+  static verifyAccessToken(req: Request, res: Response, next: NextFunction) {
     const { token } = req.cookies;
 
     if (!token) {
@@ -20,7 +20,7 @@ export default {
       return;
     }
 
-    jwt.verify(token, process.env.ACCESS_TOKEN, (error: unknown, payload: unknown) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN as string, (error: unknown, payload: unknown) => {
       if (error) {
         const err = error as Error;
         const message = err.name === "JsonWebTokenError" ? "Unauthorized" : err.message;
@@ -31,5 +31,7 @@ export default {
       res.locals = payload as typeof res.locals;
       next();
     });
-  },
-};
+  }
+}
+
+export default JsonWebtoken;

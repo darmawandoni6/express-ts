@@ -1,8 +1,9 @@
 {
-    "client": "Thunder Client",
+    "clientName": "Thunder Client",
     "collectionName": "express-ts",
-    "dateExported": "2024-01-11T07:38:05.113Z",
-    "version": "1.1",
+    "collectionId": "74d0ac9a-112a-44a5-a051-20d6c62fb179",
+    "dateExported": "2024-07-18T04:37:50.159Z",
+    "version": "1.2",
     "folders": [
         {
             "_id": "4c1fafdf-601d-4dc7-a0f3-96b767cadc05",
@@ -36,15 +37,13 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-27T10:46:51.509Z",
-            "modified": "2024-01-11T06:27:37.401Z",
+            "modified": "2024-07-17T20:02:44.288Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"name\": \"admin 2\"\n}",
+                "raw": "{\n  \"name\": \"admin\"\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "7176874a-cb6d-4ca8-92ed-433fd25d7117",
@@ -55,29 +54,25 @@
             "method": "POST",
             "sortNum": 10000,
             "created": "2023-06-27T10:46:51.510Z",
-            "modified": "2023-07-15T13:48:15.576Z",
+            "modified": "2024-07-18T03:22:32.054Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"username\": \"doni691\",\n  \"password\": \"kiasu123\",\n  \"roleId\": 2\n}",
+                "raw": "{\n  \"username\": \"user1\",\n  \"password\": \"kiasu123\",\n  \"roleId\": 1\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "6ff0d52e-ca3e-4197-8a11-567aaf8adb30",
             "colId": "74d0ac9a-112a-44a5-a051-20d6c62fb179",
             "containerId": "492d2176-4915-4e4b-90fd-c96f0f87d7a3",
-            "name": "get by token",
+            "name": "profile",
             "url": "http://localhost:4000/api-v1/user",
             "method": "GET",
             "sortNum": 10000,
             "created": "2023-07-15T14:26:24.600Z",
-            "modified": "2023-07-15T14:26:57.281Z",
-            "headers": [],
-            "params": [],
-            "tests": []
+            "modified": "2024-07-18T03:30:47.912Z",
+            "headers": []
         },
         {
             "_id": "2a5b30e4-e010-4693-b91b-31fabf48af18",
@@ -121,15 +116,13 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2023-06-27T10:46:51.511Z",
-            "modified": "2024-01-11T06:28:00.177Z",
+            "modified": "2024-07-18T03:22:37.644Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"username\": \"doni691\",\n  \"password\": \"kiasu123\"\n}",
+                "raw": "{\n  \"username\": \"user1\",\n  \"password\": \"kiasu123\"\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "9899efba-5e6f-44f7-9c40-a0673e673be2",
@@ -150,33 +143,30 @@
             "colId": "74d0ac9a-112a-44a5-a051-20d6c62fb179",
             "containerId": "492d2176-4915-4e4b-90fd-c96f0f87d7a3",
             "name": "edit",
-            "url": "http://localhost:4000/api-v1/user",
+            "url": "http://localhost:4000/api-v1/user/3",
             "method": "PUT",
             "sortNum": 20000,
             "created": "2023-07-15T14:34:55.868Z",
-            "modified": "2023-07-15T14:55:36.889Z",
+            "modified": "2024-07-18T04:37:18.127Z",
             "headers": [],
-            "params": [],
             "body": {
                 "type": "json",
                 "raw": "{\n  \"username\": \"doni69\",\n  \"roleId\": 1\n}",
                 "form": []
-            },
-            "tests": []
+            }
         },
         {
             "_id": "483f6f10-d575-419b-992f-f09b2fab38ac",
             "colId": "74d0ac9a-112a-44a5-a051-20d6c62fb179",
             "containerId": "492d2176-4915-4e4b-90fd-c96f0f87d7a3",
             "name": "remove",
-            "url": "http://localhost:4000/api-v1/user",
+            "url": "http://localhost:4000/api-v1/user/1",
             "method": "DELETE",
             "sortNum": 30000,
             "created": "2023-07-15T14:59:02.408Z",
-            "modified": "2023-07-15T14:59:16.559Z",
-            "headers": [],
-            "params": [],
-            "tests": []
+            "modified": "2024-07-18T04:37:34.429Z",
+            "headers": []
         }
-    ]
+    ],
+    "ref": "ICOUeYkpmT6o1SUGnHy_HVQB50Y3GmMcWv5vBCtyugI0QY44h2WhMB1jS2qipgrN_hH36dkhYd-ztmNfivQ4ng"
 }

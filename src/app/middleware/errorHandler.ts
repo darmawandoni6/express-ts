@@ -1,14 +1,11 @@
 import type { ErrorRequestHandler } from "express";
 
-export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+import type { HttpError } from "http-errors";
+
+import ResponseAPI from "@helpers/response";
+
+export const errorHandler: ErrorRequestHandler = (err: HttpError, req, res, next) => {
   const code = err.status || 500;
-
-  res.status(code);
-  res.send({
-    status: code,
-    message: err.message || err,
-    data: null,
-  });
-
+  ResponseAPI.error(res, err.message, code);
   next();
 };

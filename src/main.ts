@@ -1,20 +1,33 @@
-import "dotenv/config";
+import env from "dotenv";
+import http from "http";
 
-import { app, message, port } from "./app";
-import db from "@driver/index";
+import App from "./app";
+import Database from "./app/database";
+import ConfigDB from "./app/database/config";
+import Service from "./service";
 
-app.listen(port, async () => {
+const main = async () => {
+  env.config();
+
+  const port = Number(process.env.PORT) || 3000;
+
+  const app = new App(port);
+  const db = new Database(ConfigDB.SQLITE);
   try {
-    try {
-      db.sequelize.authenticate();
-    } catch (error) {
-      console.log((error as Error).message);
-      process.exit(-1);
-    }
+    await db.__init();
 
-    console.log(message);
+    console.log(`Connected to ${process.env.DATABASE_NAME} database `);
+    console.log("Starting server...");
+    const service = new Service(db);
+    app.__init(service);
+    const server = http.createServer(app.instance);
+
+    server.listen(port, () => {
+      console.log(app.message);
+    });
   } catch (error) {
-    console.log((error as Error).message);
-    process.exit(-1);
+    console.log(error);
   }
-});
+};
+
+main();

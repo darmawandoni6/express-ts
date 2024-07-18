@@ -2,26 +2,27 @@
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   },
+  "include": ["src/**/*"],
   "compilerOptions": {
-    "target": "es2016",
+    "target": "ES2016",
     "module": "commonjs",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
+    "lib": ["ES6"],
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
-    "resolveJsonModule": true,
+    "moduleResolution": "Node",
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["src/app/*"],
-      "@controller/*": ["src/controllers/*"],
-      "@helper/*": ["src/helpers/*"],
-      "@database/*": ["src/repository/databases/*"],
-      "@driver/*": ["src/repository/driver/*"],
-      "@usecase/*": ["src/usecase/*"]
-    }
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+      "@modules/*": ["src/app/modules/*"],
+      "@databases/*": ["src/app/databases/*"],
+      "@middleware/*": ["src/app/middleware/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@type/*": ["src/types/*"]
+    },
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true
+  }
 }
