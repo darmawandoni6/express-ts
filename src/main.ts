@@ -1,4 +1,4 @@
-import env from "dotenv";
+import "dotenv/config";
 import http from "http";
 
 import App from "./app";
@@ -7,8 +7,6 @@ import ConfigDB from "./app/database/config";
 import Service from "./service";
 
 const main = async () => {
-  env.config();
-
   const port = Number(process.env.PORT) || 3000;
 
   const app = new App(port);
