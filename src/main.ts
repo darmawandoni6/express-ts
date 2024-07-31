@@ -1,30 +1,21 @@
-import env from "dotenv";
+import "dotenv/config";
 import http from "http";
 
-import App from "./app";
-import Database from "./app/database";
-import ConfigDB from "./app/database/config";
-import Service from "./service";
+import App from "./application/app";
+import { sequelize, syncModel } from "./application/database";
 
 const main = async () => {
-  env.config();
-
   const port = Number(process.env.PORT) || 3000;
 
-  const app = new App(port);
-  const db = new Database(ConfigDB.SQLITE);
   try {
-    await db.__init();
+    await sequelize.authenticate();
+    await syncModel();
 
-    console.log(`Connected to ${process.env.DATABASE_NAME} database `);
-    console.log("Starting server...");
-    const service = new Service(db);
-    app.__init(service);
+    const app = new App(port);
+    app.init();
+
     const server = http.createServer(app.instance);
-
-    server.listen(port, () => {
-      console.log(app.message);
-    });
+    server.listen(port, () => console.log(app.message));
   } catch (error) {
     console.log(error);
   }

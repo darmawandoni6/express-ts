@@ -1,28 +1,33 @@
 {
   "ts-node": {
-    "require": ["tsconfig-paths/register"]
+    "require": [ "tsconfig-paths/register" ]
   },
-  "include": ["src/**/*"],
+  "include": [ "src/**/*" ],
   "compilerOptions": {
     "target": "ES2016",
     "module": "commonjs",
-    "lib": ["ES6"],
+    "lib": [ "ES6" ],
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "moduleResolution": "Node",
     "baseUrl": "./",
     "paths": {
-      "@modules/*": ["src/app/modules/*"],
-      "@databases/*": ["src/app/databases/*"],
-      "@middleware/*": ["src/app/middleware/*"],
-      "@helpers/*": ["src/helpers/*"],
-      "@type/*": ["src/types/*"]
+      "@database/*": [ "src/application/database/*" ],
+      "@pkg/*": [ "src/application/pkg/*" ],
+      "@application/*": [ "src/application/*" ],
+      "@controller/*": [ "src/controller/*" ],
+      "@helper/*": [ "src/helper/*" ],
+      "@mapping/*": [ "src/mapping/*" ],
+      "@middleware/*": [ "src/middleware/*" ],
+      "@route/*": [ "src/route/*" ],
+      "@service/*": [ "src/service/*" ],
+      "@type/*": [ "src/type/*" ],
+      "@validation/*": [ "src/validation/*" ],
     },
-    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "typeRoots": [ "src/type", "./node_modules/@types" ],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noUnusedLocals": true
   }
 }

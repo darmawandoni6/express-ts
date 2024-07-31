@@ -1,7 +1,7 @@
 {
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "semi": true,
-  "trailingComma": "all",
+  "trailingComma": "es5",
   "printWidth": 120,
   "importOrder": [
     "^(express/(.*)$)|^(express$)",

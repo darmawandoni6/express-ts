@@ -1,12 +1,14 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
-  "ignorePatterns": ["dist", ".eslintrc"],
+  "extends": [ "eslint:recommended", "plugin:@typescript-eslint/recommended" ],
+  "ignorePatterns": [ "dist" ],
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaVersion": 2016
   },
   "rules": {
     "@typescript-eslint/consistent-type-imports": "warn",
-    "@typescript-eslint/consistent-type-definitions": "error"
+    "@typescript-eslint/consistent-type-definitions": "error",
+    "no-trailing-spaces": "error"
   }
 }
