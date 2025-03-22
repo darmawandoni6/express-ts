@@ -1,33 +1,32 @@
 {
   "ts-node": {
-    "require": [ "tsconfig-paths/register" ]
+    "require": ["tsconfig-paths/register"]
   },
-  "include": [ "src/**/*" ],
+  "exclude": ["node_modules", "dist"],
+  "include": ["src", "types"],
+
   "compilerOptions": {
     "target": "ES2016",
     "module": "commonjs",
-    "lib": [ "ES6" ],
+    "lib": ["ES6"],
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "moduleResolution": "Node",
-    "baseUrl": "./",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
     "paths": {
-      "@database/*": [ "src/application/database/*" ],
-      "@pkg/*": [ "src/application/pkg/*" ],
-      "@application/*": [ "src/application/*" ],
-      "@controller/*": [ "src/controller/*" ],
-      "@helper/*": [ "src/helper/*" ],
-      "@mapping/*": [ "src/mapping/*" ],
-      "@middleware/*": [ "src/middleware/*" ],
-      "@route/*": [ "src/route/*" ],
-      "@service/*": [ "src/service/*" ],
-      "@type/*": [ "src/type/*" ],
-      "@validation/*": [ "src/validation/*" ],
+      "@config/*": ["src/config/*"],
+      "@controller/*": ["src/controllers/*"],
+      "@middleware/*": ["src/middlewares/*"],
+      "@repository/*": ["src/repository/*"],
+      "@route/*": ["src/routes/*"],
+      "@usecase/*": ["src/usecase/*"],
+      "@util/*": ["src/utils/*"]
     },
-    "typeRoots": [ "src/type", "./node_modules/@types" ],
+    "types": ["./types/global"],
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

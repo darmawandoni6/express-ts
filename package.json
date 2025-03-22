@@ -1,10 +1,10 @@
 {
   "name": "express-ts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
-    "dev": "nodemon src/main.ts",
+    "dev": "NODE_ENV=development nodemon src/main.ts",
     "start": "node dist/main.js",
     "sync": "ENV=production ts-node src/sync.ts",
     "build": "rm -rf dist && tsc && tsc-alias",
@@ -13,6 +13,7 @@
   "author": "darmawandoni6@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "6.5.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -22,11 +23,9 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7"
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.4.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
@@ -35,12 +34,13 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.14.2",
+    "@types/swagger-ui-express": "^4.1.8",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
     "eslint": "^8.0.1",
-    "globals": "^15.4.0",
     "nodemon": "^3.1.1",
     "prettier": "^3.3.3",
+    "prisma": "^6.5.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
