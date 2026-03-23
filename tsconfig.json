@@ -1,32 +1,29 @@
 {
   "ts-node": {
-    "require": ["tsconfig-paths/register"]
+    "require": ["tsconfig-paths/register", "dotenv/config"]
   },
-  "exclude": ["node_modules", "dist"],
-  "include": ["src", "types"],
-
+  "tsc-alias": {
+    "resolveFullPaths": true
+  },
   "compilerOptions": {
-    "target": "ES2016",
-    "module": "commonjs",
-    "lib": ["ES6"],
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "ES2023",
     "strict": true,
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-      "@config/*": ["src/config/*"],
-      "@controller/*": ["src/controllers/*"],
-      "@middleware/*": ["src/middlewares/*"],
-      "@repository/*": ["src/repository/*"],
-      "@route/*": ["src/routes/*"],
-      "@usecase/*": ["src/usecase/*"],
-      "@util/*": ["src/utils/*"]
-    },
-    "types": ["./types/global"],
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "outDir": "dist",
+    "types": ["./types/global"],
+    "baseUrl": ".",
+    "paths": {
+      "@prisma-generated/*": ["generated/prisma/*"],
+      "@config/*": ["src/config/*"],
+      "@middleware/*": ["src/middlewares/*"],
+      "@module/*": ["src/modules/*"],
+      "@shared/*": ["src/shared/*"],
+      "@util/*": ["src/utils/*"]
+    }
+  },
+  "include": ["src", "generated"],
+  "exclude": ["node_modules", "dist"]
 }

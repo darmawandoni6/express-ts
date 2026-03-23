@@ -1,4 +1,5 @@
-import multer, { FileFilterCallback } from "multer";
+import type { FileFilterCallback } from "multer";
+import multer from "multer";
 import path from "path";
 
 export const diskStorage = multer.diskStorage({

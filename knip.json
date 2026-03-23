@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "tags": ["-lintignore"],
+  "entry": ["src/app.ts"],
+  "ignoreDependencies": [
+    "@prisma/client",
+    "pg",
+    "multer",
+    "@eslint/json",
+    "@types/multer",
+    "@types/pg",
+    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint/parser"
+  ]
+}
