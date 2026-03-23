@@ -1,14 +1,16 @@
 import "dotenv/config";
 import http from "http";
 
-import { prisma } from "@config/prisma";
+import { PrismaConfig } from "@config/prisma";
 
 import App from "./app";
+
+PrismaConfig.init();
 
 const main = async () => {
   const port = Number(process.env.PORT) || 3000;
   try {
-    const app = new App(port, prisma);
+    const app = new App(port);
     app.init();
 
     const server = http.createServer(app.instance);
@@ -24,6 +26,7 @@ main();
 
 const shutdown = async () => {
   console.log("Shutting down gracefully...");
+  const { prisma } = PrismaConfig.getConfig();
   await prisma.$disconnect();
   process.exit(0);
 };

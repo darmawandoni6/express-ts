@@ -13,15 +13,14 @@
   "editor.formatOnSave": true,
   "sqltools.connections": [
     {
+      "ssh": "Disabled",
       "previewLimit": 50,
       "server": "localhost",
-      "port": 5432,
       "driver": "PostgreSQL",
-      "name": "postgres",
-      "database": "postgres",
-      "username": "postgres",
-      "password": "29rouli14"
+      "name": "express_ts",
+      "connectString": "postgresql://darmawan_db:kiasu123@localhost:5432/express_ts?schema=public"
     }
   ],
+  "eslint.workingDirectories": [{ "mode": "auto" }],
   "cSpell.words": ["openapi"]
 }

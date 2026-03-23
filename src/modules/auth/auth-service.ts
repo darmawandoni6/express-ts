@@ -1,12 +1,10 @@
-import type { Prisma, PrismaClient, User } from "@prisma/client";
+import type { PrismaClient, User } from "@prisma-generated/client";
+import { UserService } from "@shared/service/user-service";
 
-export class UserRepository {
-  private readonly User;
-
+export class AuthService extends UserService {
   constructor(prisma: PrismaClient) {
-    this.User = prisma.user;
+    super(prisma.user); // Pass PrismaClient to parent
   }
-
   async isEmailRegistered(email: string): Promise<boolean> {
     const count = await this.User.count({ where: { email } });
     return count > 0;
@@ -15,9 +13,5 @@ export class UserRepository {
   async getUser(email: string): Promise<User | null> {
     const data = await this.User.findFirst({ where: { email } });
     return data;
-  }
-
-  async create(data: Prisma.UserCreateInput): Promise<void> {
-    await this.User.create({ data });
   }
 }

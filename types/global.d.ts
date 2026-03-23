@@ -4,12 +4,7 @@ declare global {
     interface ProcessEnv {
       [key: string]: string | undefined;
       PORT: string;
-      NODE_ENV: string;
-      DATABASE_HOST: string;
-      DATABASE_NAME: string;
-      DATABASE_PORT: string;
-      DATABASE_USER: string;
-      DATABASE_PASSWORD: string;
+      NODE_ENV: "development" | "production";
       DATABASE_URL: string;
       ACCESS_TOKEN: string;
       EXP_TOKEN: string;
@@ -17,8 +12,9 @@ declare global {
   }
   interface ApiResponse<T> {
     success: boolean;
-    data: T;
+    data: T | null;
     message?: string;
+    meta?: Record<string, unknown>;
   }
 }
 

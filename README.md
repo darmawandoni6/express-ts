@@ -2,16 +2,18 @@
 
 You can use this template when you're starting a new project. It contains general concepts, you can customize it according to your needs.
 
-A boilerplate/starter project for quickly building RESTful APIs using TypeScript, Express, Sequelize, and sqlite3.
+A boilerplate/starter project for quickly building RESTful APIs using TypeScript, Express, Prisma, and Postgres.
 
 ## Manual Installation
 
 - git clone https://github.com/darmawandoni6/express-ts
 - cd express-ts
-- yarn install or npm install
+- [please use node v24](#nvm)
+- `yarn install` or `npm install` for install all d
 - rename .env.example to .env
-- yarn sync --seed or npm run sync --seed (for first sync database)
-- yarn dev or npm run dev
+- `yarn migrate` or `npm run migrate` for sync
+- `yarn generate` or `npm run generate` for generate type from prisma
+- `yarn dev` or `npm run dev` for running this project
 
 ## Table of Contents
 
@@ -20,14 +22,15 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 - [Features](https://github.com/darmawandoni6/express-ts#features)
 - [Project Structure](https://github.com/darmawandoni6/express-ts#project-structure)
 - [API Endpoints](https://github.com/darmawandoni6/express-ts#api-endpoint)
+- [NVM version](https://github.com/darmawandoni6/express-ts#nvm-vesion)
 <!-- TABLE-OF-CONTENTS:END -->
 
 ## [Features](#features)
 
 <!-- FEATURES:START -->
 
-- **SQL database**: used sqlite3
-- **ORM** : used [sequelize](https://sequelize.org/docs/v6/getting-started/)
+- **SQL database**: using Postgres
+- **ORM** : using [prisma](https://www.prisma.io/)
 - **Authentication and authorization**: using [JWT](https://jwt.io/)
 - **Logging**: using [morgan](https://github.com/expressjs/morgan)
 - **Error handling**: error handling mechanism with specific result messages and codes
@@ -38,19 +41,14 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 ## [Project Structure](#project-structure)
 
 ```js
-src
- ┣ app
- ┃ ┣ database
- ┃ ┣ middleware
- ┃ ┣ modules
- ┃ ┃ ┣ role
- ┃ ┃ ┗ user
- ┃ ┗ index.ts
- ┣ helpers
- ┣ types
- ┣ main.ts
- ┣ service.ts
- ┗ sync.ts
+├── src
+│  ├── config
+│  ├── middlewares
+│  ├── modules
+│  ├── shared
+│  ├── utils
+│  ├── main.ts
+│  └── app.ts
 ```
 
 ## [API Endpoints](#api-endpoint)
@@ -66,14 +64,41 @@ List of available routes:
 - Register - POST /api-v1/register
 - Login - POST /api-v1/login
 
-**User**:
+## [NVM Setting for zsh](#nvm-vesion)
 
-- Profile - GET /api-v1/user
-- Edit User - PUT /api-v1/user
-- Remove User - DELETE /api-v1/user
+### Option 1: Use .nvmrc
 
-**Role**:
+Inside your project folder:
 
-- Create Role - POS /api-v1/role
-- Edit Role - PUT /api-v1/role/:id
-- Remove Role - DELETE /api-v1/role/:id
+```bash
+echo "24" > .nvmrc
+```
+
+Then manually run once:
+
+```bash
+source ~/.nvm/nvm.sh
+nvm use
+```
+
+### Option 2: Auto-switch Node version when entering directory
+
+Add this to your shell config:
+
+#### ~/.zshrc
+
+```bash
+autoload -U add-zsh-hook
+
+load-nvmrc() {
+  if [ -f .nvmrc ]; then
+    source ~/.nvm/nvm.sh
+    nvm use
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+```
+
+after that we need to run `source ~/.zshrc` to apply config
