@@ -42,11 +42,13 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 
 ```js
 ├── src
+│  ├── common
+│  │  ├── middlewares
+│  │  ├── shared
+│  │  └── utils
 │  ├── config
-│  ├── middlewares
+│  ├── docs
 │  ├── modules
-│  ├── shared
-│  ├── utils
 │  ├── main.ts
 │  └── app.ts
 ```
