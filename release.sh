@@ -1,29 +1,70 @@
 #!/bin/bash
 
-# Stop kalau ada error
 set -e
 
-# Cek apakah working directory bersih
+# =========================
+# CONFIG
+# =========================
+BRANCH="master"
+
+# =========================
+# CHECKS
+# =========================
+echo "🔍 Checking current branch..."
+CURRENT_BRANCH=$(git branch --show-current)
+
+if [ "$CURRENT_BRANCH" != "$BRANCH" ]; then
+  echo "❌ Harus di branch $BRANCH (sekarang: $CURRENT_BRANCH)"
+  exit 1
+fi
+
+echo "🔍 Checking uncommitted changes..."
 if [ -n "$(git status --porcelain)" ]; then
-  echo "❌ Git working directory tidak bersih. Commit atau stash dulu."
+  echo "❌ Masih ada perubahan yang belum di-commit"
   exit 1
 fi
 
-# Ambil versi dari package.json
-VERSION=$(node -p "require('./package.json').version")
+# =========================
+# INPUT VERSION TYPE
+# =========================
+echo "Pilih version bump:"
+echo "1) patch"
+echo "2) minor"
+echo "3) major"
+read -p "Masukkan pilihan (1/2/3): " choice
 
-echo "📦 Versi terdeteksi: v$VERSION"
+case $choice in
+  1) VERSION_TYPE="patch" ;;
+  2) VERSION_TYPE="minor" ;;
+  3) VERSION_TYPE="major" ;;
+  *) echo "❌ Pilihan tidak valid"; exit 1 ;;
+esac
 
-# Cek apakah tag sudah ada
-if git rev-parse "v$VERSION" >/dev/null 2>&1; then
-  echo "⚠️ Tag v$VERSION sudah ada."
-  exit 1
+# =========================
+# BUMP VERSION
+# =========================
+echo "📦 Bumping version ($VERSION_TYPE)..."
+NEW_VERSION=$(npm version $VERSION_TYPE)
+
+echo "✅ New version: $NEW_VERSION"
+
+# =========================
+# PUSH
+# =========================
+echo "🚀 Pushing to origin..."
+git push origin $BRANCH --follow-tags
+
+# =========================
+# OPTIONAL: GITHUB RELEASE
+# =========================
+if command -v gh &> /dev/null
+then
+  echo "📢 Creating GitHub release..."
+  gh release create "$NEW_VERSION" \
+    --title "$NEW_VERSION" \
+    --notes "Release $NEW_VERSION"
+else
+  echo "⚠️ gh CLI tidak ditemukan, skip GitHub release"
 fi
 
-# Buat tag
-git tag -a "v$VERSION" -m "Release v$VERSION"
-
-# Push tag ke remote
-git push origin "v$VERSION"
-
-echo "🚀 Berhasil release v$VERSION"
+echo "🎉 Release selesai!"
