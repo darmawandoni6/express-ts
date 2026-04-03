@@ -1,7 +1,7 @@
+import { encrypt } from "@common/utils/bcrypt";
 import type { UserCreateInput } from "@prisma-generated/models";
-import { encrypt } from "@util/bcrypt";
 
-export class UserUsecase {
+export class UserService {
   userPayload(user: UserCreateInput): UserCreateInput {
     const payload: UserCreateInput = {
       ...user,

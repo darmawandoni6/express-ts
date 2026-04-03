@@ -14,6 +14,7 @@ const main = async () => {
     app.init();
 
     const server = http.createServer(app.instance);
+
     server.listen(port, () => {
       console.log(app.message);
     });
@@ -25,10 +26,7 @@ const main = async () => {
 main();
 
 const shutdown = async () => {
-  console.log("Shutting down gracefully...");
-  const { prisma } = PrismaConfig.getConfig();
-  await prisma.$disconnect();
-  process.exit(0);
+  await PrismaConfig.shutdown();
 };
-process.on("SIGINT", shutdown); // Handling Ctrl + C
-process.on("SIGTERM", shutdown); //
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);

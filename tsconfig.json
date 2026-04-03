@@ -17,11 +17,9 @@
     "baseUrl": ".",
     "paths": {
       "@prisma-generated/*": ["generated/prisma/*"],
+      "@common/*": ["src/common/*"],
       "@config/*": ["src/config/*"],
-      "@middleware/*": ["src/middlewares/*"],
-      "@module/*": ["src/modules/*"],
-      "@shared/*": ["src/shared/*"],
-      "@util/*": ["src/utils/*"]
+      "@module/*": ["src/modules/*"]
     }
   },
   "include": ["src", "generated"],

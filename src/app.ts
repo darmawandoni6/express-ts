@@ -3,10 +3,12 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import logger from "morgan";
+import swaggerUi from "swagger-ui-express";
 
-import { PrismaConfig } from "@config/prisma";
-import { errorHandler, methodNotAllowed } from "@middleware/error-middleware";
+import { errorHandler, methodNotAllowed } from "@common/middlewares/error-middleware";
 import { AuthRoutes } from "@module/auth/auth-route";
+
+import { swaggerSpec } from "./docs/swagger";
 
 class App {
   private readonly app: express.Application;
@@ -36,9 +38,9 @@ class App {
       res.send({ message: this.message });
     });
 
-    const { prisma } = PrismaConfig.getConfig();
+    AuthRoutes.init(this.app);
 
-    AuthRoutes.init(this.app, prisma);
+    this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     this.app.use(methodNotAllowed);
     this.app.use(errorHandler);

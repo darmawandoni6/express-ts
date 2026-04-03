@@ -3,8 +3,8 @@ import type { ErrorRequestHandler, NextFunction, Request, Response } from "expre
 import type { HttpError } from "http-errors";
 import createHttpError from "http-errors";
 
+import { ResponsesAPI } from "@common/utils/response";
 import { PrismaClientKnownRequestError } from "@prisma-generated/internal/prismaNamespace";
-import { ResponsesAPI } from "@util/response";
 
 export const methodNotAllowed = (req: Request, res: Response, next: NextFunction) => {
   if (req.url.includes("/docs")) {

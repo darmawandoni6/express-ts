@@ -26,7 +26,6 @@ export class RequestValidation {
 
         // Assign parsed data back to request
         req.body = parsed.body;
-        req.query = parsed.query as typeof req.query;
         req.params = parsed.params as typeof req.params;
 
         next();

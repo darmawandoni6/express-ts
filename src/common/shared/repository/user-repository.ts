@@ -1,10 +1,12 @@
-import type { Prisma, PrismaClient } from "@prisma-generated/client";
+import { PrismaConfig } from "@config/prisma";
+import type { Prisma } from "@prisma-generated/client";
 
-export class UserService {
+export class UserRepository {
   protected readonly User;
 
-  constructor(user: PrismaClient["user"]) {
-    this.User = user;
+  constructor() {
+    const { prisma } = PrismaConfig.getConfig();
+    this.User = prisma.user;
   }
 
   async create(data: Prisma.UserCreateInput): Promise<void> {

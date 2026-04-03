@@ -1,30 +1,26 @@
 import type { NextFunction, Request, Response } from "express";
 
-import type { PrismaClient } from "@prisma-generated/client";
-import { ResponsesAPI } from "@util/response";
+import { ResponsesAPI } from "@common/utils/response";
 
 import { AuthService } from "./auth-service";
-import { AuthUsecase } from "./auth-usecase";
 import type { LoginBody } from "./dto/login-schema";
 
 export class AuthController extends ResponsesAPI {
   private service: AuthService;
-  private usecase: AuthUsecase;
 
-  constructor(prisma: PrismaClient) {
+  constructor() {
     super();
-    this.service = new AuthService(prisma);
-    this.usecase = new AuthUsecase(prisma);
+    this.service = new AuthService();
   }
 
   register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const email: string = String(req.body.email);
 
-      await this.usecase.authRegister(email);
-      const payload = this.usecase.userPayload(req.body);
+      await this.service.authRegister(email);
+      const payload = this.service.userPayload(req.body);
 
-      await this.service.create(payload);
+      await this.service.submitRegister(payload);
 
       this.successAPI(res, { message: "Success register" });
     } catch (error) {
@@ -39,7 +35,7 @@ export class AuthController extends ResponsesAPI {
         password: req.body.password,
       };
 
-      const data = await this.usecase.authLogin(user);
+      const data = await this.service.authLogin(user);
 
       this.successAPI(res, { message: "Success login", data });
     } catch (error) {
