@@ -21,8 +21,8 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 
 - [Features](#features)
 - [Project Structure](#project-structure)
-- [NVM Setting for zsh](#nvm-vesion)
-- [API Endpoints](#api-endpoint)
+- [NVM Setting for zsh](#nvm-setting-for-zsh)
+- [API Endpoints](#api-endpoints)
 <!-- TABLE-OF-CONTENTS:END -->
 
 ## [Features](#features)
@@ -53,7 +53,7 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 │  └── app.ts
 ```
 
-## [NVM Setting for zsh](#nvm-vesion)
+## [NVM Setting for zsh](#nvm-setting-for-zsh)
 
 ### Option 1: Use .nvmrc
 
@@ -92,7 +92,7 @@ load-nvmrc
 
 after that we need to run `source ~/.zshrc` to apply config
 
-## [API Endpoints](#api-endpoint)
+## [API Endpoints](#api-endpoints)
 
 running the project and open swagger documentation
 
