@@ -2,7 +2,7 @@ import createHttpError from "http-errors";
 
 import type { User } from "@common/shared/dto/user-schema";
 import { UserService } from "@common/shared/service/user-service";
-import { compare } from "@common/utils/bcrypt";
+import { Bcrypt } from "@common/utils/bcrypt";
 import { generateToken } from "@common/utils/token";
 import type { UserCreateInput } from "@prisma-generated/models";
 
@@ -10,11 +10,19 @@ import { AuthRepository } from "./auth-repository";
 import type { LoginResponseType } from "./dto/login-schema";
 
 export class AuthService extends UserService {
+  private static instance: AuthService;
   private authRepository: AuthRepository;
 
-  constructor() {
+  private constructor() {
     super();
-    this.authRepository = new AuthRepository();
+    this.authRepository = AuthRepository.getInstance();
+  }
+
+  static getInstance(): AuthService {
+    if (!AuthService.instance) {
+      AuthService.instance = new AuthService();
+    }
+    return AuthService.instance;
   }
 
   async authRegister(email: string): Promise<void> {
@@ -38,7 +46,7 @@ export class AuthService extends UserService {
       throw createHttpError.NotFound(message);
     }
 
-    const match = compare(user.password, res.password);
+    const match = Bcrypt.compare(user.password, res.password);
     if (!match) {
       throw createHttpError.NotFound(message);
     }

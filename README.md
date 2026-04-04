@@ -8,7 +8,7 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 
 - git clone https://github.com/darmawandoni6/express-ts
 - cd express-ts
-- [please use node v24](#nvm)
+- [please use node v24](#nvm-vesion)
 - `yarn install` or `npm install` for install all d
 - rename .env.example to .env
 - `yarn migrate` or `npm run migrate` for sync
@@ -19,10 +19,10 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 
 <!-- TABLE-OF-CONTENTS:START -->
 
-- [Features](https://github.com/darmawandoni6/express-ts#features)
-- [Project Structure](https://github.com/darmawandoni6/express-ts#project-structure)
-- [API Endpoints](https://github.com/darmawandoni6/express-ts#api-endpoint)
-- [NVM version](https://github.com/darmawandoni6/express-ts#nvm-vesion)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [NVM Setting for zsh](#nvm-vesion)
+- [API Endpoints](#api-endpoint)
 <!-- TABLE-OF-CONTENTS:END -->
 
 ## [Features](#features)
@@ -52,19 +52,6 @@ A boilerplate/starter project for quickly building RESTful APIs using TypeScript
 │  ├── main.ts
 │  └── app.ts
 ```
-
-## [API Endpoints](#api-endpoint)
-
-import collection API to like postman, thunder client, etc.
-
-[Collection API](https://github.com/darmawandoni6/express-ts/blob/master/express-ts.json)
-
-List of available routes:
-
-**Auth**:
-
-- Register - POST /api-v1/register
-- Login - POST /api-v1/login
 
 ## [NVM Setting for zsh](#nvm-vesion)
 
@@ -104,3 +91,16 @@ load-nvmrc
 ```
 
 after that we need to run `source ~/.zshrc` to apply config
+
+## [API Endpoints](#api-endpoint)
+
+running the project and open swagger documentation
+
+[Collection API by swagger - http://localhost:4000/docs](http://localhost:4000/docs)
+
+List of available routes:
+
+**Auth**:
+
+- Register - POST /api/register
+- Login - POST /api/login

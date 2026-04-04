@@ -1,3 +1,4 @@
+import pkg from "package.json";
 import swaggerJsdoc from "swagger-jsdoc";
 import type { Options } from "swagger-jsdoc";
 
@@ -6,7 +7,7 @@ const options: Options = {
     openapi: "3.0.0",
     info: {
       title: "My API",
-      version: "1.0.0",
+      version: pkg.version,
       description: "API documentation with Swagger",
     },
     servers: [
@@ -15,7 +16,7 @@ const options: Options = {
       },
     ],
   },
-  apis: ["./src/modules/**/*-route.ts"],
+  apis: ["./src/docs/components.ts", "./src/modules/**/swagger/components.ts", "./src/modules/**/swagger/auth.ts"],
 };
 
 export const swaggerSpec = swaggerJsdoc(options);

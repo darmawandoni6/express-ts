@@ -1,32 +1,47 @@
 import "dotenv/config";
 import http from "http";
 
+import logger from "@common/utils/logger";
 import { PrismaConfig } from "@config/prisma";
 
-import App from "./app";
+import { App } from "./app";
 
-PrismaConfig.init();
-
-const main = async () => {
-  const port = Number(process.env.PORT) || 3000;
+const bootstrap = async () => {
   try {
-    const app = new App(port);
-    app.init();
+    const PORT = Number(process.env.PORT || "3000");
+
+    // ✅ tunggu Prisma connect dulu
+    await PrismaConfig.init();
+
+    // ✅ init App singleton
+    const app = App.init(PORT);
 
     const server = http.createServer(app.instance);
 
-    server.listen(port, () => {
-      console.log(app.message);
+    server.listen(PORT, () => {
+      logger.info(app.message);
+      logger.info(app.messageDoc);
     });
+
+    return server;
   } catch (error) {
-    console.log(error);
+    logger.error("❌ Bootstrap failed:", error);
+    process.exit(1); // stop app kalau gagal
   }
 };
 
-main();
+(async () => {
+  const server = await bootstrap();
 
-const shutdown = async () => {
-  await PrismaConfig.shutdown();
-};
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
+  // ✅ graceful shutdown
+  const shutdown = async () => {
+    await PrismaConfig.shutdown();
+    server.close(() => {
+      logger.info("🛑 Shutting down...");
+      process.exit(0);
+    });
+  };
+
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
+})();

@@ -14,7 +14,7 @@ declare global {
     success: boolean;
     data: T | null;
     message?: string;
-    meta?: Record<string, unknown>;
+    meta?: unknown;
   }
 }
 

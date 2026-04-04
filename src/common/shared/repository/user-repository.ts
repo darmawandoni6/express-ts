@@ -4,9 +4,8 @@ import type { Prisma } from "@prisma-generated/client";
 export class UserRepository {
   protected readonly User;
 
-  constructor() {
-    const { prisma } = PrismaConfig.getConfig();
-    this.User = prisma.user;
+  protected constructor() {
+    this.User = PrismaConfig.prisma.user;
   }
 
   async create(data: Prisma.UserCreateInput): Promise<void> {

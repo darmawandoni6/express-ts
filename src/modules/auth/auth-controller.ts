@@ -5,12 +5,15 @@ import { ResponsesAPI } from "@common/utils/response";
 import { AuthService } from "./auth-service";
 import type { LoginBody } from "./dto/login-schema";
 
-export class AuthController extends ResponsesAPI {
+export class AuthController {
   private service: AuthService;
 
-  constructor() {
-    super();
-    this.service = new AuthService();
+  private constructor() {
+    this.service = AuthService.getInstance();
+  }
+
+  static init() {
+    return new AuthController();
   }
 
   register = async (req: Request, res: Response, next: NextFunction) => {
@@ -22,7 +25,7 @@ export class AuthController extends ResponsesAPI {
 
       await this.service.submitRegister(payload);
 
-      this.successAPI(res, { message: "Success register" });
+      ResponsesAPI.success(res, { message: "Success register" });
     } catch (error) {
       next(error);
     }
@@ -37,7 +40,7 @@ export class AuthController extends ResponsesAPI {
 
       const data = await this.service.authLogin(user);
 
-      this.successAPI(res, { message: "Success login", data });
+      ResponsesAPI.success(res, { message: "Success login", data });
     } catch (error) {
       next(error);
     }

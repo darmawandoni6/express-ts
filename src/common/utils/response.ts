@@ -1,7 +1,7 @@
 import type { Response } from "express";
 
-export class ResponsesAPI {
-  successAPI<T>(
+export const ResponsesAPI = {
+  success<T>(
     response: Response,
     opt: Pick<ApiResponse<T>, "message"> & {
       data?: T;
@@ -16,9 +16,9 @@ export class ResponsesAPI {
       message: opt.message ?? "Success",
     };
     response.status(status).json(json);
-  }
+  },
 
-  errorAPI<T>(response: Response, opt: Pick<ApiResponse<T>, "message" | "meta"> & { status?: number }) {
+  error<T>(response: Response, opt: Pick<ApiResponse<T>, "message" | "meta"> & { status?: number }) {
     const status = opt.status ?? 400;
 
     const json: ApiResponse<T> = {
@@ -32,5 +32,5 @@ export class ResponsesAPI {
     }
 
     response.status(status).json(json);
-  }
-}
+  },
+};

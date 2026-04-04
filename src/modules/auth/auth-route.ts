@@ -6,51 +6,40 @@ import { AuthController } from "./auth-controller";
 import { LoginSchema } from "./dto/login-schema";
 import { RegisterSchema } from "./dto/register-schema";
 
-export class AuthRoutes {
-  private readonly ctr: AuthController;
+export const AuthRoutes = (app: express.Application) => {
+  const controller = AuthController.init();
 
-  constructor() {
-    this.ctr = new AuthController();
-  }
+  const route = express.Router();
+  /**
+   * @swagger
+   * /register:
+   *   post:
+   *     summary: Register a new user
+   *     tags: [Auth]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - email
+   *               - password
+   *             properties:
+   *               email:
+   *                 type: string
+   *                 example: user@email.com
+   *               password:
+   *                 type: string
+   *                 example: password123
+   *     responses:
+   *       201:
+   *         description: User registered successfully
+   *       400:
+   *         description: Validation error
+   */
+  route.post("/register", RequestValidation.validate(RegisterSchema), controller.register);
+  route.post("/login", RequestValidation.validate(LoginSchema), controller.login);
 
-  get router() {
-    const route = express.Router();
-    /**
-     * @swagger
-     * /register:
-     *   post:
-     *     summary: Register a new user
-     *     tags: [Auth]
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             type: object
-     *             required:
-     *               - email
-     *               - password
-     *             properties:
-     *               email:
-     *                 type: string
-     *                 example: user@email.com
-     *               password:
-     *                 type: string
-     *                 example: password123
-     *     responses:
-     *       201:
-     *         description: User registered successfully
-     *       400:
-     *         description: Validation error
-     */
-    route.post("/register", RequestValidation.validate(RegisterSchema), this.ctr.register);
-    route.post("/login", RequestValidation.validate(LoginSchema), this.ctr.login);
-
-    return route;
-  }
-
-  static init(app: express.Application) {
-    const auth = new AuthRoutes();
-    app.use("/api", auth.router);
-  }
-}
+  app.use("/api", route);
+};
